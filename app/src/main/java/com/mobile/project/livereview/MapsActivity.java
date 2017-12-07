@@ -21,6 +21,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -39,6 +41,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private FirebaseAuth auth;
     private FirebaseDatabase database;
     private GoogleMap mMap;
+    private Marker touchMarker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +113,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onMapClick(LatLng latLng) {
                 Log.i("map clicked", "");
+
+                //set marker
+                if(touchMarker != null)
+                    touchMarker.remove();
+
+                touchMarker = mMap.addMarker(new MarkerOptions().position(latLng));
+
+                //get users in distance
                 List<UserLocation> userInDistance = new LinkedList<>();
                 Location click = new Location("Click");
                 click.setLatitude(latLng.latitude);
@@ -126,6 +137,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                 }
 
+                //notify users
                 notifyUsers(userInDistance);
             }
         });
