@@ -43,7 +43,8 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".MessagingActivity"></activity>
+        <activity android:name=".MessagingActivity" />
+        <activity android:name=".DiscoverActivity" android:label="Discover"></activity>
     </application>
 
 </manifest>

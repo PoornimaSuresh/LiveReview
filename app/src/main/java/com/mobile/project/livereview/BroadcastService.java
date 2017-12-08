@@ -20,6 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.mobile.project.livereview.entity.UserProfile;
 
 public class BroadcastService extends Service implements LocationListener {
     private LocationManager locationManager;
@@ -92,6 +93,8 @@ public class BroadcastService extends Service implements LocationListener {
         db.child("locations").child(uid).child("lat").setValue(location.getLatitude());
         db.child("locations").child(uid).child("lng").setValue(location.getLongitude());
         db.push();
+
+        UserProfile.currentLocation = location; //update user's current location
     }
 
     @Override

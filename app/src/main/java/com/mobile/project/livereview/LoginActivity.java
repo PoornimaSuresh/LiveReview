@@ -65,12 +65,6 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//TODO for debugging
-//                Intent intent = new Intent(LoginActivity.this, MapsActivity.class);
-//                startActivity(intent);
-//                finish();
-//end
-
                 String email = inputEmail.getText().toString();
                 final String password = inputPassword.getText().toString();
 

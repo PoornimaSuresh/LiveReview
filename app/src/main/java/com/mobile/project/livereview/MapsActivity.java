@@ -1,6 +1,8 @@
 package com.mobile.project.livereview;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -8,8 +10,11 @@ import android.location.Location;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
@@ -19,6 +24,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -29,7 +35,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.mobile.project.livereview.entity.MarkerLocation;
 import com.mobile.project.livereview.entity.UserLocation;
+import com.mobile.project.livereview.entity.UserProfile;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -38,16 +46,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static int user_range = 15;
 
     List<UserLocation> userLocations = new LinkedList<>();
+    List<MarkerLocation> markerLocations = new LinkedList<>();
     private FirebaseAuth auth;
     private FirebaseDatabase database;
     private GoogleMap mMap;
-    private Marker touchMarker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-
+        UserProfile.getInstance(); //init user profile
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
 
@@ -109,36 +117,91 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
 
+        /*
+        On map click, allow user to broadcast a message to that location
+         */
+        mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+            @Override
+            public void onMapLongClick(final LatLng latLng) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
+                builder.setTitle("Enter Broadcast Message");
+
+                // Set up the input
+                final EditText input = new EditText(MapsActivity.this);
+
+                // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                builder.setView(input);
+
+                // Set up the buttons
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String description;
+                        description = input.getText().toString();
+
+                        Marker marker = mMap.addMarker(new MarkerOptions()
+                                .position(latLng)
+                                .snippet(description)
+                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)).draggable(false));
+                        DatabaseReference db = database.getReference();
+                        String uid = db.child("marker_location").push().getKey();
+                        db.child("marker_locations").child(uid).child("lat").setValue(latLng.latitude);
+                        db.child("marker_locations").child(uid).child("user").setValue(auth.getCurrentUser().getUid());
+                        db.child("marker_locations").child(uid).child("lng").setValue(latLng.longitude);
+                        db.child("marker_locations").child(uid).child("message").setValue(description);
+                        db.push();
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+                //dialog.getWindow().setBackgroundDrawableResource(R.color.colorPrimaryDark);
+            }
+        });
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
-            public void onMapClick(LatLng latLng) {
+            public void onMapClick(final LatLng latLng) {
+
+
                 Log.i("map clicked", "");
-
-                //set marker
-                if(touchMarker != null)
-                    touchMarker.remove();
-
-                touchMarker = mMap.addMarker(new MarkerOptions().position(latLng));
-
-                //get users in distance
+                Toast.makeText(MapsActivity.this, "Clicked", Toast.LENGTH_SHORT).show();
                 List<UserLocation> userInDistance = new LinkedList<>();
                 Location click = new Location("Click");
-                click.setLatitude(latLng.latitude);
-                click.setLongitude(latLng.longitude);
+                //click.setLatitude(latLng.latitude);
+                //click.setLongitude(latLng.longitude);
 
                 for(UserLocation user : userLocations) {
                     Location location = new Location(user.getUid());
                     location.setLatitude(user.getLat());
                     location.setLongitude(user.getLng());
-
-                    float distance = click.distanceTo(location);
-                    if(distance <= 2*user_range) {
-                        userInDistance.add(user);
+                    if( UserProfile.currentLocation != null)
+                    {
+                        float distance = location.distanceTo(UserProfile.currentLocation); // click.distanceTo(location);
+                        if(distance <= 2*user_range) {
+                            userInDistance.add(user);
+                        }
                     }
+
                 }
 
-                //notify users
                 notifyUsers(userInDistance);
+
+            }
+        });
+
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                Log.e("Maps", "marker clicked");
+                marker.setTitle(" ");
+                marker.showInfoWindow();
+                return true;
             }
         });
     }
@@ -166,6 +229,35 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
 
                 redrawMap();
+
+
+
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e("db error map", databaseError.getMessage());
+            }
+        });
+
+        DatabaseReference marker_db = database.getReference().child("marker_locations");
+        marker_db.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(!dataSnapshot.hasChildren()) {
+                    Log.i("marker location ", "no data");
+                    return;
+                }
+
+                markerLocations.clear();
+                for(DataSnapshot entry : dataSnapshot.getChildren()) {
+                    MarkerLocation markerLocation = entry.getValue(MarkerLocation.class);
+                    markerLocations.add(markerLocation);
+                }
+
+                redrawMap();
             }
 
             @Override
@@ -185,6 +277,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     .fillColor(Color.BLUE)
             );
         }
+        for(MarkerLocation location : markerLocations) {
+            mMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(location.getLat(), location.getLng()))
+                    .snippet(location.getMessage())
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)).draggable(false));
+        }
+
     }
 
 //    public void requestLocations() {
@@ -229,7 +328,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public void onShowMessaging(View v) {
-        Intent intent = new Intent(MapsActivity.this, MessagingActivity.class);
+        //Intent intent = new Intent(MapsActivity.this, MessagingActivity.class);
+        //startActivity(intent);
+        Intent intent = new Intent(MapsActivity.this, DiscoverActivity.class);
         startActivity(intent);
     }
 
