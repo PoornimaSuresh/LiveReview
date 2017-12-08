@@ -50,6 +50,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private FirebaseAuth auth;
     private FirebaseDatabase database;
     private GoogleMap mMap;
+    private Marker touchMarker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,31 +168,30 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(final LatLng latLng) {
-
-
                 Log.i("map clicked", "");
-                Toast.makeText(MapsActivity.this, "Clicked", Toast.LENGTH_SHORT).show();
                 List<UserLocation> userInDistance = new LinkedList<>();
                 Location click = new Location("Click");
-                //click.setLatitude(latLng.latitude);
-                //click.setLongitude(latLng.longitude);
+                click.setLatitude(latLng.latitude);
+                click.setLongitude(latLng.longitude);
 
+                //set marker
+                if(touchMarker != null)
+                    touchMarker.remove();
+                touchMarker = mMap.addMarker(new MarkerOptions().position(latLng));
+
+                //get users in distance
                 for(UserLocation user : userLocations) {
                     Location location = new Location(user.getUid());
                     location.setLatitude(user.getLat());
                     location.setLongitude(user.getLng());
-                    if( UserProfile.currentLocation != null)
-                    {
-                        float distance = location.distanceTo(UserProfile.currentLocation); // click.distanceTo(location);
-                        if(distance <= 2*user_range) {
-                            userInDistance.add(user);
-                        }
+                    float distance = location.distanceTo(click); // click.distanceTo(location);
+                    if(distance <= 2*user_range) {
+                        userInDistance.add(user);
                     }
-
                 }
 
+                //notify users
                 notifyUsers(userInDistance);
-
             }
         });
 
@@ -229,11 +229,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
 
                 redrawMap();
-
-
-
-
-
             }
 
             @Override
@@ -286,50 +281,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-//    public void requestLocations() {
-//        final String url = "https://us-central1-livereview-b4382.cloudfunctions.net/locations?";
-//
-//        float zoom = mMap.getCameraPosition().zoom;
-//        LatLng curr = mMap.getCameraPosition().target;
-//        String query = "lat=" + curr.latitude + "&lng=" + curr.longitude + "&zoom=" + zoom;
-//
-//        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET, url+query, null, new Response.Listener<JSONObject>() {
-//            @Override
-//            public void onResponse(JSONObject response) {
-//                try {
-//                    JSONArray locations = response.getJSONArray("locations");
-//                    mMap.clear();
-//
-//                    for(int i = 0; i < locations.length(); i++) {
-//                        JSONObject entry = locations.getJSONObject(i);
-//                        double lat = entry.getDouble("lat");
-//                        double lng = entry.getDouble("lng");
-//                        mMap.addCircle(new CircleOptions().center(new LatLng(lat, lng)).radius(2).fillColor(Color.BLUE));
-//                    }
-//
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//                //mTxtDisplay.setText("Response: " + response.toString());
-//            }
-//        }, new Response.ErrorListener() {
-//
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                // TODO Auto-generated method stub
-//            }
-//        });
-//
-//        RequestService.getInstance(this).addToRequestQueue(jsObjRequest);
-//    }
-
     public void onSignOut(View v) {
         signOut();
     }
 
     public void onShowMessaging(View v) {
-        //Intent intent = new Intent(MapsActivity.this, MessagingActivity.class);
-        //startActivity(intent);
+        Intent intent = new Intent(MapsActivity.this, MessagingActivity.class);
+        startActivity(intent);
+    }
+
+    public void onDiscover(View v) {
         Intent intent = new Intent(MapsActivity.this, DiscoverActivity.class);
         startActivity(intent);
     }

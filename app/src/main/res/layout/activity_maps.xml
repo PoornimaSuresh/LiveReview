@@ -39,7 +39,7 @@ tools:context="com.mobile.project.livereview.MapsActivity">
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="Profile"
+        android:text="@string/btn_profile"
         android:background="@color/colorAccent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
@@ -50,7 +50,7 @@ tools:context="com.mobile.project.livereview.MapsActivity">
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Filter"
+        android:text="@string/btn_filter"
         android:background="@color/colorAccent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonProfile" />
@@ -62,7 +62,7 @@ tools:context="com.mobile.project.livereview.MapsActivity">
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:onClick="onSignOut"
-        android:text="Logout"
+        android:text="@string/btn_sign_out"
         android:background="@color/colorAccent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonChats" />
@@ -75,8 +75,36 @@ tools:context="com.mobile.project.livereview.MapsActivity">
         android:layout_marginTop="8dp"
         android:background="@color/colorAccent"
         android:onClick="onShowMessaging"
-        android:text="Discover"
+        android:text="@string/btn_chats"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonFilter" />
+
+    <Button
+        android:id="@+id/buttonDiscover"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/colorAccent"
+        android:onClick="onDiscover"
+        android:text="@string/btn_discover"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonLogout" />
+
+    <TextView
+        android:id="@+id/textViewChatHint"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_marginBottom="50dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/start_chat_hint"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:background="#a0ffffff" />
 
 </android.support.constraint.ConstraintLayout>
