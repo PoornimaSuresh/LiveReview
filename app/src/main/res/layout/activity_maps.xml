@@ -105,6 +105,6 @@ tools:context="com.mobile.project.livereview.MapsActivity">
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        tools:background="#a0ffffff" />
+        android:background="@color/colorAccent60" />
 
 </android.support.constraint.ConstraintLayout>

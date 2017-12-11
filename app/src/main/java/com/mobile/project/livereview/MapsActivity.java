@@ -43,7 +43,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
-    private static int user_range = 15;
+    private static int user_range = 30;
 
     List<UserLocation> userLocations = new LinkedList<>();
     List<MarkerLocation> markerLocations = new LinkedList<>();
@@ -269,7 +269,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.addCircle(new CircleOptions()
                     .center(new LatLng(location.getLat(), location.getLng()))
                     .radius(user_range)
-                    .fillColor(Color.BLUE)
+                    .fillColor(getColor(R.color.colorAccent60))
+                    .strokeWidth(0)
             );
         }
         for(MarkerLocation location : markerLocations) {
