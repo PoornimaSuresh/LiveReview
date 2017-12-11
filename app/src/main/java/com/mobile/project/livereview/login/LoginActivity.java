@@ -1,5 +1,5 @@
 /* based on https://www.androidhive.info/2016/06/android-getting-started-firebase-simple-login-registration-auth/ */
-package com.mobile.project.livereview;
+package com.mobile.project.livereview.login;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -16,6 +16,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.mobile.project.livereview.MapsActivity;
+import com.mobile.project.livereview.R;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText inputEmail, inputPassword;

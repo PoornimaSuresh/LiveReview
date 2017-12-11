@@ -1,5 +1,5 @@
 /* based on https://www.androidhive.info/2016/06/android-getting-started-firebase-simple-login-registration-auth/ */
-package com.mobile.project.livereview;
+package com.mobile.project.livereview.login;
 
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.mobile.project.livereview.R;
 
 public class ResetPasswordActivity extends AppCompatActivity {
     private EditText inputEmail;

@@ -14,7 +14,6 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
@@ -38,6 +37,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.mobile.project.livereview.entity.MarkerLocation;
 import com.mobile.project.livereview.entity.UserLocation;
 import com.mobile.project.livereview.entity.UserProfile;
+import com.mobile.project.livereview.login.LoginActivity;
 
 import java.util.LinkedList;
 import java.util.List;
