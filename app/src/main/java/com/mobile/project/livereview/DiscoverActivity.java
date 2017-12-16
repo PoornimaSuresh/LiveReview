@@ -1,5 +1,6 @@
 package com.mobile.project.livereview;
 
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -43,14 +45,24 @@ public class DiscoverActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
 
         updateDiscoverList();
-        listAdapter = new DiscoverListAdapter(this, R.layout.discover_list_item_layout, discoverData );
+        listAdapter = new DiscoverListAdapter(this, R.layout.discover_list_item_layout, discoverData);
         listViewDiscover.setAdapter(listAdapter);
         listViewDiscover.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                //TextView tv_topic = (TextView) findViewById(R.id.textViewMessage);
+                TextView tv_topic = view.findViewById(R.id.textViewMessage);
 
+                String topic = tv_topic.getText().toString();
+                Log.e("discover", topic);
+                Intent intent = new Intent(DiscoverActivity.this, MessagingActivity.class);
+                if (topic != null){
+                    intent.putExtra("topic",topic);
+                }
+                startActivity(intent);
             }
         });
+
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
