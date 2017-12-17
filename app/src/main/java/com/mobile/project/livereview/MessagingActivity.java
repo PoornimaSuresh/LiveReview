@@ -98,18 +98,21 @@ public class MessagingActivity extends AppCompatActivity {
 
 
 
-
-
                 //For each message, check if user is me. If so, add it to chatbubble list with myMessage = true
                 for(DataSnapshot entry : dataSnapshot.getChildren()) {
                     String message = entry.child("message").getValue(String.class);
-                    Log.e("Mess", "message: "+message);
-                    boolean isMyMessage = true;
+                    //Log.e("Mess", "message: "+message);
+                    boolean isMyMessage = false;
+                    //Log.e("messages", "user  "+entry.child("user").getValue());
                     if (entry.child("user").getValue() == me){
-                        isMyMessage = false;
+                        isMyMessage = true;
+                        Log.e("messages", me+" wrote message "+message+ " it's ME");
+                    }else{
+                        Log.e("messages", entry.child("user").getValue()+" wrote message "+message);
                     }
                     ChatBubble newBubble = new ChatBubble(message, isMyMessage);
                     ChatBubbles.add(newBubble);
+                    adapter.notifyDataSetChanged();
 
                 }
 
@@ -138,7 +141,7 @@ public class MessagingActivity extends AppCompatActivity {
                 } else {
                     //add message to list
                     String message = editText.getText().toString();
-                    ChatBubble ChatBubble = new ChatBubble(message, myMessage);
+                    ChatBubble ChatBubble = new ChatBubble(message, true);
                     ChatBubbles.add(ChatBubble);
                     adapter.notifyDataSetChanged();
                     editText.setText("");

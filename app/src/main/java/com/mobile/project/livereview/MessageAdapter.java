@@ -35,14 +35,14 @@ public class MessageAdapter extends ArrayAdapter<ChatBubble> {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 
         int layoutResource = 0; // determined by view type
-        ChatBubble ChatBubble = getItem(position);
+        ChatBubble chatBubble = getItem(position);
         int viewType = getItemViewType(position);
 
         //Use blue bubble if message is mine. Else, use gray
-        if (ChatBubble.myMessage()) {
-            layoutResource = R.layout.left_message;
-        } else {
+        if (chatBubble.myMessage()) {
             layoutResource = R.layout.right_message;
+        } else {
+            layoutResource = R.layout.left_message;
         }
 
         if (convertView != null) {
@@ -54,7 +54,7 @@ public class MessageAdapter extends ArrayAdapter<ChatBubble> {
         }
 
         //set message content
-        holder.msg.setText(ChatBubble.getContent());
+        holder.msg.setText(chatBubble.getContent());
 
         return convertView;
     }
