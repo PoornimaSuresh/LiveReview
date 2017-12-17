@@ -153,7 +153,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         usr.addRepu(2);
                         int r= usr.setReputation();
 
-
                         //Using Shared Preferences. Save the reputation points.
                         share = getSharedPreferences("reputation", Context.MODE_PRIVATE);
                         editor = share.edit();

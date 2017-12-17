@@ -12,7 +12,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mobile.project.livereview.entity.UserProfile;
-
+/*
+Created by Kshitij Chhatwani.
+ */
 public class displayuser extends AppCompatActivity {
 
     private static final String TAG = "displayuser";

@@ -5,7 +5,7 @@ import android.location.Location;
 import java.util.Map;
 
 /**
- * Created by raaghav on 12/6/2017.
+ * Created by Raghav & Kshitij
  */
 
 public class UserProfile
