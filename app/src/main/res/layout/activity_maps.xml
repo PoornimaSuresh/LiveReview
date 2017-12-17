@@ -40,6 +40,7 @@ tools:context="com.mobile.project.livereview.MapsActivity">
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="@string/btn_profile"
+        android:onClick="UserProfile"
         android:background="@color/colorAccent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />

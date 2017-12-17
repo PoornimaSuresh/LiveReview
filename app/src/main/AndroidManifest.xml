@@ -47,7 +47,9 @@
         <activity
             android:name=".DiscoverActivity"
             android:label="Discover" />
-        <activity android:name=".ChatHistoryActivity"></activity>
+        <activity android:name=".ChatHistoryActivity" />
+        <activity android:name=".displayuser" />
+        <activity android:name=".editUserProfile"></activity>
     </application>
 
 </manifest>

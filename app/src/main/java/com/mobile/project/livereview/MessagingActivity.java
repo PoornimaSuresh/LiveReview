@@ -1,6 +1,9 @@
 package com.mobile.project.livereview;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,9 +20,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.mobile.project.livereview.entity.ChatBubble;
+import com.mobile.project.livereview.entity.UserProfile;
 
 import java.util.ArrayList;
 import java.util.List;
+import android.support.v7.app.AlertDialog;
 
 public class MessagingActivity extends AppCompatActivity {
 
@@ -36,6 +41,9 @@ public class MessagingActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     //private FirebaseListAdapter<ChatBubble> chatAdapter;
 
+    //SharedPreferences
+    SharedPreferences share;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -169,5 +177,58 @@ public class MessagingActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+
+        AlertDialog.Builder build = new AlertDialog.Builder(this);
+
+            build.setTitle("Rate your Experience :")
+                    .setMessage(" How was your experience chatting with the user? ")
+                    .setCancelable(false)
+                    .setNegativeButton(" Not so Great ", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                            UserProfile usr = new UserProfile();
+                            usr.addRepu(1);                           //Awarding 1 point to avoid bias towards certain users or benefit of doubt to the person who reponsded.
+
+                            //Using Shared Preferences. Save the reputation points.
+                            int r = usr.setReputation();
+                            share = getSharedPreferences("reputation", Context.MODE_PRIVATE);
+                            editor = share.edit();
+                            editor.putString("repu",Integer.toString(r));
+                            Log.d("MapSharedPref:",String.valueOf(r));
+                            editor.apply();
+
+                            MessagingActivity.this.finish();
+                        }
+                    })
+
+                    .setPositiveButton(" Awesome  ", new DialogInterface.OnClickListener() {
+
+                        @Override
+                    public void onClick(DialogInterface dialogInterface, int i)
+                    {
+                        UserProfile usr = new UserProfile();
+                        usr.addRepu(3);
+
+                        //Using Shared Preferences. Save the reputation points.
+                        int r = usr.setReputation();
+                        share = getSharedPreferences("reputation", Context.MODE_PRIVATE);
+                        editor = share.edit();
+                        editor.putString("repu",Integer.toString(r));
+                        Log.d("MapSharedPref:",String.valueOf(r));
+                        editor.apply();
+
+                        MessagingActivity.this.finish();
+
+                    }
+                });
+            AlertDialog alert = build.create();
+            alert.show();
+        //super.onBackPressed();
     }
 }

@@ -18,6 +18,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.mobile.project.livereview.MapsActivity;
 import com.mobile.project.livereview.R;
+import com.mobile.project.livereview.entity.UserProfile;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -59,8 +60,8 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String email = inputEmail.getText().toString().trim();
-                String password = inputPassword.getText().toString().trim();
+                final String email = inputEmail.getText().toString().trim();
+                final String password = inputPassword.getText().toString().trim();
 
                 if (TextUtils.isEmpty(email)) {
                     Toast.makeText(getApplicationContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
@@ -93,6 +94,9 @@ public class SignupActivity extends AppCompatActivity {
                                             Toast.LENGTH_SHORT).show();
                                 } else {
                                     startActivity(new Intent(SignupActivity.this, MapsActivity.class));
+                                    UserProfile.email = email;
+                                    UserProfile.UserPassword = password;
+                                    UserProfile.Reputation = 0;
                                     finish();
                                 }
                             }

@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +19,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.mobile.project.livereview.MapsActivity;
 import com.mobile.project.livereview.R;
+import com.mobile.project.livereview.entity.UserProfile;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText inputEmail, inputPassword;
@@ -72,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
                 //startActivity(intent);
                 //finish();
                 //end
-                String email = inputEmail.getText().toString();
+                final String email = inputEmail.getText().toString();
                 final String password = inputPassword.getText().toString();
 
                 if (TextUtils.isEmpty(email)) {
@@ -104,8 +106,13 @@ public class LoginActivity extends AppCompatActivity {
                                         Toast.makeText(LoginActivity.this, getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
                                     }
                                 } else {
+                                    UserProfile.email = email;
+                                    UserProfile.UserPassword = password;
                                     Intent intent = new Intent(LoginActivity.this, MapsActivity.class);
+                                    intent.putExtra("emailID",email);
+                                    Log.d("ProfileDataLogin", "displayProfile: "+email);
                                     startActivity(intent);
+
                                     finish();
                                 }
                             }

@@ -2,8 +2,10 @@ package com.mobile.project.livereview;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -51,6 +53,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private FirebaseDatabase database;
     private GoogleMap mMap;
     private Marker touchMarker;
+
+    SharedPreferences share;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,6 +145,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     public void onClick(DialogInterface dialog, int which) {
                         String description;
                         description = input.getText().toString();
+
+
+                        //Adding Rputation Points
+                        UserProfile usr = new UserProfile();
+                        //usr.addRepu(usr.email, 2);
+                        usr.addRepu(2);
+                        int r= usr.setReputation();
+
+
+                        //Using Shared Preferences. Save the reputation points.
+                        share = getSharedPreferences("reputation", Context.MODE_PRIVATE);
+                        editor = share.edit();
+                        editor.putString("repu",Integer.toString(r));
+                        Log.d("MapSharedPref:",String.valueOf(r));
+                        editor.apply();
 
                         Marker marker = mMap.addMarker(new MarkerOptions()
                                 .position(latLng)
@@ -282,6 +302,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+    public void UserProfile(View w)
+    {
+        Intent callUser = new Intent(MapsActivity.this,displayuser.class);
+        startActivity(callUser);
+    }
     public void onSignOut(View v) {
         signOut();
     }
