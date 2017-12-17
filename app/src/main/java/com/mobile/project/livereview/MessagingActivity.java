@@ -51,7 +51,7 @@ public class MessagingActivity extends AppCompatActivity {
             messageTopic = "something";
         }
 
-        Log.v("MessagingAct", messageTopic);
+        //Log.v("MessagingAct", messageTopic);
 
         if (getSupportActionBar() != null){
             getSupportActionBar().setTitle("Chat");
@@ -62,6 +62,13 @@ public class MessagingActivity extends AppCompatActivity {
 
 
         ChatBubbles = new ArrayList<>();
+        listView = (ListView) findViewById(R.id.list_msg);
+        btnSend = findViewById(R.id.btn_chat_send);
+        editText = (EditText) findViewById(R.id.msg_type);
+
+        //set ListView adapter first
+        adapter = new MessageAdapter(this, R.layout.left_message, ChatBubbles);
+        listView.setAdapter(adapter);
 
         final String me = auth.getCurrentUser().getUid();
 
@@ -102,13 +109,14 @@ public class MessagingActivity extends AppCompatActivity {
                 for(DataSnapshot entry : dataSnapshot.getChildren()) {
                     String message = entry.child("message").getValue(String.class);
                     //Log.e("Mess", "message: "+message);
-                    boolean isMyMessage = false;
                     //Log.e("messages", "user  "+entry.child("user").getValue());
+                    boolean isMyMessage;
                     if (entry.child("user").getValue() == me){
                         isMyMessage = true;
-                        Log.e("messages", me+" wrote message "+message+ " it's ME");
+                        Log.e("messages", me+" wrote message "+message+ " it's ME "+isMyMessage);
                     }else{
-                        Log.e("messages", entry.child("user").getValue()+" wrote message "+message);
+                        isMyMessage = false;
+                        Log.e("messages", entry.child("user").getValue()+" wrote message "+message+" "+isMyMessage);
                     }
                     ChatBubble newBubble = new ChatBubble(message, isMyMessage);
                     ChatBubbles.add(newBubble);
@@ -123,14 +131,6 @@ public class MessagingActivity extends AppCompatActivity {
                 //System.out.println("The read failed: " + databaseError.getCode());
             }
         });
-
-        listView = (ListView) findViewById(R.id.list_msg);
-        btnSend = findViewById(R.id.btn_chat_send);
-        editText = (EditText) findViewById(R.id.msg_type);
-
-        //set ListView adapter first
-        adapter = new MessageAdapter(this, R.layout.left_message, ChatBubbles);
-        listView.setAdapter(adapter);
 
         //When SEND is clicked
         btnSend.setOnClickListener(new View.OnClickListener() {
