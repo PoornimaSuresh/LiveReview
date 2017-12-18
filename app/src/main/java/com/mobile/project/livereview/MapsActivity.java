@@ -129,11 +129,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
             public void onMapLongClick(final LatLng latLng) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this, R.style.DialogTheme);
                 builder.setTitle("Enter Broadcast Message");
 
                 // Set up the input
                 final EditText input = new EditText(MapsActivity.this);
+                input.setTextColor(Color.WHITE);
 
                 // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
                 input.setInputType(InputType.TYPE_CLASS_TEXT);

@@ -186,8 +186,7 @@ public class MessagingActivity extends AppCompatActivity {
     @Override
     public void onBackPressed()
     {
-
-        AlertDialog.Builder build = new AlertDialog.Builder(this);
+        AlertDialog.Builder build = new AlertDialog.Builder(this, R.style.DialogTheme);
 
             build.setTitle("Rate your Experience :")
                     .setMessage(" How was your experience chatting with the user? ")

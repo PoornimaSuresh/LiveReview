@@ -2,7 +2,7 @@
     <string name="app_name">LiveReview</string>
 
     <!-- Map -->
-    <string name="start_chat_hint">Click on the map to start chatting...</string>
+    <string name="start_chat_hint">Long click on the map to start chatting</string>
     <string name="btn_profile">Profile</string>
     <string name="btn_filter">Filter</string>
     <string name="btn_chats">Chats</string>
