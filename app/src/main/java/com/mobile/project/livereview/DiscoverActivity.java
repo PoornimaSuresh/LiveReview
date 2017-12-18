@@ -91,12 +91,12 @@ public class DiscoverActivity extends AppCompatActivity {
                     Location location = new Location("marker");
                     location.setLatitude(markerLocation.getLat());
                     location.setLongitude(markerLocation.getLng());
-                    if(location.distanceTo(UserProfile.currentLocation) <= 500)
+
+                    if(UserProfile.currentLocation != null && location.distanceTo(UserProfile.currentLocation) <= 500)
                     {
                         markerLocation.setAddress(getAddress(new LatLng(location.getLatitude(), location.getLongitude())));
                         discoverData.add(markerLocation);
                     }
-
                 }
 
                 listAdapter.notifyDataSetChanged();

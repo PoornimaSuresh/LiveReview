@@ -35,6 +35,19 @@ tools:context="com.mobile.project.livereview.MapsActivity">
     </LinearLayout>
 
     <Button
+        android:id="@+id/buttonChats"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/colorAccent80"
+        android:drawableRight="@android:drawable/ic_menu_agenda"
+        android:onClick="onShowMessaging"
+        android:text="@string/btn_chats"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonDiscover" />
+
+    <Button
         android:id="@+id/buttonProfile"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
