@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.mobile.project.livereview.editUserProfile">
+    tools:context="com.mobile.project.livereview.editUserProfile"
+    android:background="@color/colorPrimary">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,6 +18,7 @@
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:textSize="35sp"
+            android:textColor="@color/colorAccent"
             />
         <TextView
             android:layout_width="match_parent"
@@ -26,6 +28,7 @@
             android:textSize="30sp"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="25dp"
+            android:textColor="@color/colorAccent"
             />
 
 
@@ -36,7 +39,9 @@
             android:hint="Existing Password"
             android:maxLines="1"
             android:textSize="25sp"
-            android:layout_marginTop="15dp" />
+            android:layout_marginTop="15dp"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white" />
 
         <EditText
             android:layout_width="match_parent"
@@ -46,7 +51,9 @@
             android:singleLine="true"
             android:textSize="25sp"
             android:maxLines="1"
-            android:layout_marginTop="15dp"/>
+            android:layout_marginTop="15dp"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white"/>
 
         <Button
             android:id="@+id/ChangeData"
@@ -56,10 +63,10 @@
             android:textSize="20sp"
             android:textAlignment="center"
             style="android:textAppearanceSmall"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/colorAccent"
+            android:textColor="@android:color/black"
             android:layout_marginTop="20dp"
             />
-
     </LinearLayout>
 
 

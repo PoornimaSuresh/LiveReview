@@ -48,8 +48,10 @@
             android:name=".DiscoverActivity"
             android:label="Discover" />
         <activity android:name=".ChatHistoryActivity" />
-        <activity android:name=".displayuser" />
-        <activity android:name=".editUserProfile"></activity>
+        <activity android:name=".displayuser"
+            android:label="Profile" />
+        <activity android:name=".editUserProfile"
+            android:label="Profile"></activity>
     </application>
 
 </manifest>
