@@ -24,7 +24,7 @@ import com.mobile.project.livereview.entity.UserProfile;
  Created by Kshitij Chhatwani
  */
 
-public class editUserProfile extends AppCompatActivity {
+public class EditUserProfile extends AppCompatActivity {
 
     private static final String TAG ="New Password " ;
     TextView StaticEmail;
@@ -100,11 +100,11 @@ public class editUserProfile extends AppCompatActivity {
                                                     public void onComplete(@NonNull Task<Void> task) {
                                                         if (task.isSuccessful()) {
                                                             //Log.d(TAG,"User Password changed");
-                                                            Toast.makeText(editUserProfile.this, "Password is Updated", Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(EditUserProfile.this, "Password is Updated", Toast.LENGTH_SHORT).show();
 
                                                         } else {
                                                             //Log.d(TAG,"Password Not Updated");
-                                                            Toast.makeText(editUserProfile.this, "Password Failed to Update", Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(EditUserProfile.this, "Password Failed to Update", Toast.LENGTH_SHORT).show();
                                                         }
 
                                                     }
@@ -112,7 +112,7 @@ public class editUserProfile extends AppCompatActivity {
 
                                     } else {
                                         //Log.d("User Authentication", "Auth Failed");
-                                        Toast.makeText(editUserProfile.this," Authentication Failed",Toast.LENGTH_SHORT);
+                                        Toast.makeText(EditUserProfile.this," Authentication Failed",Toast.LENGTH_SHORT);
                                     }
                                 }
                             });
@@ -120,7 +120,7 @@ public class editUserProfile extends AppCompatActivity {
                 }
                 else
                 {
-                    Toast.makeText(editUserProfile.this," Invalid Current Password. Operation Failed",Toast.LENGTH_SHORT);
+                    Toast.makeText(EditUserProfile.this," Invalid Current Password. Operation Failed",Toast.LENGTH_SHORT);
                 }
             }
         });

@@ -304,7 +304,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public void UserProfile(View w)
     {
-        Intent callUser = new Intent(MapsActivity.this,displayuser.class);
+        Intent callUser = new Intent(MapsActivity.this,DisplayUser.class);
         startActivity(callUser);
     }
     public void onSignOut(View v) {

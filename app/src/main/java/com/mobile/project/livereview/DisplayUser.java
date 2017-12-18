@@ -15,7 +15,7 @@ import com.mobile.project.livereview.entity.UserProfile;
 /*
 Created by Kshitij Chhatwani.
  */
-public class displayuser extends AppCompatActivity {
+public class DisplayUser extends AppCompatActivity {
 
     private static final String TAG = "displayuser";
     TextView Name;
@@ -68,7 +68,7 @@ public class displayuser extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-                Intent editActivity = new Intent(displayuser.this, editUserProfile.class);
+                Intent editActivity = new Intent(DisplayUser.this, EditUserProfile.class);
                 startActivity(editActivity);
             }
         });
@@ -80,7 +80,7 @@ public class displayuser extends AppCompatActivity {
         super.onResume();
         displayProfile();
 
-        Toast.makeText(displayuser.this,UserProfile.email,Toast.LENGTH_SHORT);
+        Toast.makeText(DisplayUser.this,UserProfile.email,Toast.LENGTH_SHORT);
 
     }
 
