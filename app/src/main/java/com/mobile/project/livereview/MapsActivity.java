@@ -311,7 +311,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public void onShowMessaging(View v) {
-        Intent intent = new Intent(MapsActivity.this, MessagingActivity.class);
+        Intent intent = new Intent(MapsActivity.this, MessagingInbox.class);
         startActivity(intent);
     }
 

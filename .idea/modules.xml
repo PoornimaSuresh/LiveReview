@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/LiveReview.iml" filepath="$PROJECT_DIR$/LiveReview.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/LiveReview.iml" filepath="$PROJECT_DIR$/.idea/LiveReview.iml" />
+      <module fileurl="file://D:\MobileApps\LiveReview\LiveReview.iml" filepath="D:\MobileApps\LiveReview\LiveReview.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://D:\MobileApps\LiveReview\app\app.iml" filepath="D:\MobileApps\LiveReview\app\app.iml" />
     </modules>
   </component>
 </project>
