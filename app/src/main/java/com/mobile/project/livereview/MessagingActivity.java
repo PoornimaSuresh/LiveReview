@@ -121,7 +121,7 @@ public class MessagingActivity extends AppCompatActivity {
                     if(message != "")
                     {
                         boolean isMyMessage;
-                        if (entry.child("user").getValue() == me){
+                        if (entry.child("user").getValue().equals(me)){
                             isMyMessage = true;
                             Log.e("messages", me+" wrote message "+message+ " it's ME "+isMyMessage);
                         }else{
