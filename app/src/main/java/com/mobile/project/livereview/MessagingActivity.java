@@ -118,7 +118,7 @@ public class MessagingActivity extends AppCompatActivity {
                     String message = entry.child("message").getValue(String.class);
                     //Log.e("Mess", "message: "+message);
                     //Log.e("messages", "user  "+entry.child("user").getValue());
-                    if(message != "")
+                    if(message != null && !message.isEmpty())
                     {
                         boolean isMyMessage;
                         if (entry.child("user").getValue().equals(me)){
