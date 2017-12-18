@@ -112,23 +112,27 @@ public class MessagingActivity extends AppCompatActivity {
                 */
 
 
-
+                ChatBubbles.clear();
                 //For each message, check if user is me. If so, add it to chatbubble list with myMessage = true
                 for(DataSnapshot entry : dataSnapshot.getChildren()) {
                     String message = entry.child("message").getValue(String.class);
                     //Log.e("Mess", "message: "+message);
                     //Log.e("messages", "user  "+entry.child("user").getValue());
-                    boolean isMyMessage;
-                    if (entry.child("user").getValue() == me){
-                        isMyMessage = true;
-                        Log.e("messages", me+" wrote message "+message+ " it's ME "+isMyMessage);
-                    }else{
-                        isMyMessage = false;
-                        Log.e("messages", entry.child("user").getValue()+" wrote message "+message+" "+isMyMessage);
+                    if(message != "")
+                    {
+                        boolean isMyMessage;
+                        if (entry.child("user").getValue() == me){
+                            isMyMessage = true;
+                            Log.e("messages", me+" wrote message "+message+ " it's ME "+isMyMessage);
+                        }else{
+                            isMyMessage = false;
+                            Log.e("messages", entry.child("user").getValue()+" wrote message "+message+" "+isMyMessage);
+                        }
+                        ChatBubble newBubble = new ChatBubble(message, isMyMessage);
+                        ChatBubbles.add(newBubble);
+                        adapter.notifyDataSetChanged();
                     }
-                    ChatBubble newBubble = new ChatBubble(message, isMyMessage);
-                    ChatBubbles.add(newBubble);
-                    adapter.notifyDataSetChanged();
+
 
                 }
 
@@ -149,9 +153,9 @@ public class MessagingActivity extends AppCompatActivity {
                 } else {
                     //add message to list
                     String message = editText.getText().toString();
-                    ChatBubble ChatBubble = new ChatBubble(message, true);
-                    ChatBubbles.add(ChatBubble);
-                    adapter.notifyDataSetChanged();
+                    //ChatBubble ChatBubble = new ChatBubble(message, true);
+                    //ChatBubbles.add(ChatBubble);
+                    //adapter.notifyDataSetChanged();
                     editText.setText("");
 
 

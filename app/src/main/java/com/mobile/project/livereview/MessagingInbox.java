@@ -3,34 +3,30 @@ package com.mobile.project.livereview;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
-import android.location.Location;
+import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.mobile.project.livereview.entity.MarkerLocation;
-import com.mobile.project.livereview.entity.UserProfile;
 
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
-public class DiscoverActivity extends AppCompatActivity {
+public class MessagingInbox extends AppCompatActivity {
 
     SwipeRefreshLayout swipeRefreshLayout;
     ListView listViewDiscover;
@@ -56,7 +52,7 @@ public class DiscoverActivity extends AppCompatActivity {
 
                 String topic = tv_topic.getText().toString();
                 Log.e("discover", topic);
-                Intent intent = new Intent(DiscoverActivity.this, MessagingActivity.class);
+                Intent intent = new Intent(MessagingInbox.this, MessagingActivity.class);
                 if (topic != null){
                     intent.putExtra("topic",topic);
                 }
@@ -67,7 +63,7 @@ public class DiscoverActivity extends AppCompatActivity {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                Toast.makeText(DiscoverActivity.this, "called refresh", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MessagingInbox.this, "called refresh", Toast.LENGTH_SHORT).show();
                 updateDiscoverList();
                 swipeRefreshLayout.setRefreshing(false);
             }
@@ -75,9 +71,9 @@ public class DiscoverActivity extends AppCompatActivity {
     }
 
     private void updateDiscoverList() {
-        DatabaseReference marker_db = database.getReference().child("marker_locations");
+        DatabaseReference topics = database.getReference().child("text_messages");
         Log.e("discover ", "start list update");
-        marker_db.addListenerForSingleValueEvent(new ValueEventListener() {
+        topics.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (!dataSnapshot.hasChildren()) {
@@ -86,17 +82,14 @@ public class DiscoverActivity extends AppCompatActivity {
                 }
 
                 discoverData.clear();
-                for (DataSnapshot entry : dataSnapshot.getChildren()) {
-                    MarkerLocation markerLocation = entry.getValue(MarkerLocation.class);
-                    Location location = new Location("marker");
-                    location.setLatitude(markerLocation.getLat());
-                    location.setLongitude(markerLocation.getLng());
-                    if(location.distanceTo(UserProfile.currentLocation) <= 500)
-                    {
-                        markerLocation.setAddress(getAddress(new LatLng(location.getLatitude(), location.getLongitude())));
-                        discoverData.add(markerLocation);
-                    }
 
+                for (DataSnapshot entry : dataSnapshot.getChildren()) {
+
+                    String topic =entry.getKey(); //entry.getValue().toString();
+                    MarkerLocation markerLocation = new MarkerLocation();
+                    markerLocation.setMessage(topic);
+                    markerLocation.setAddress(""); //not using address here
+                    discoverData.add(markerLocation);
                 }
 
                 listAdapter.notifyDataSetChanged();
