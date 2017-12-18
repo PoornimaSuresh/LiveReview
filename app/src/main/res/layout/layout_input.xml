@@ -9,7 +9,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="0.8"
-        android:hint="Type message" />
+        android:hint="@string/hint_message" />
 
     <Button
         android:id="@+id/btn_chat_send"
@@ -17,6 +17,6 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.2"
         android:background="@color/colorPrimary"
-        android:text="Send"
+        android:text="@string/btn_send"
         android:textColor="@color/white" />
 </LinearLayout>
