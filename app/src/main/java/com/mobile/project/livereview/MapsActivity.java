@@ -150,11 +150,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         String description;
                         description = input.getText().toString();
 
-
-
-
-
-
                         Marker marker = mMap.addMarker(new MarkerOptions()
                                 .position(latLng)
                                 .snippet(description)

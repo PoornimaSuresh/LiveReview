@@ -111,29 +111,6 @@ public class MessagingInbox extends AppCompatActivity {
         });
     }
 
-    private String getAddress(LatLng location)
-    {
-        List<Address> addresses = null;
-        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-        try {
-            addresses = geocoder.getFromLocation(
-                    location.latitude,
-                    location.longitude,
-                    // In this sample, get just a single address.
-                    1);
-        } catch (IOException ioException) {
-            // Catch network or other I/O problems.
-            Log.e("Discover Activity", "service_not_available", ioException);
-        } catch (IllegalArgumentException illegalArgumentException) {
-            // Catch invalid latitude or longitude values.
-            Log.e("Discover Activity", "invalid_lat_long_used" + ". " +
-                    "Latitude = " + location.latitude +
-                    ", Longitude = " +
-                    location.longitude, illegalArgumentException);
-        }
 
-        Address address = addresses.get(0);
-        return address.getAddressLine(0);
-    }
 
 }

@@ -1,6 +1,8 @@
 /* based on https://www.androidhive.info/2016/06/android-getting-started-firebase-simple-login-registration-auth/ */
 package com.mobile.project.livereview.login;
-
+/**
+ Created by Johannes
+ */
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

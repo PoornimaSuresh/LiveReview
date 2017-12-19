@@ -1,7 +1,7 @@
 package com.mobile.project.livereview.entity;
 
 /**
- * Created by johannes on 12/3/17.
+ * Created by Raghav on 12/3/17.
  */
 
 public class MarkerLocation {

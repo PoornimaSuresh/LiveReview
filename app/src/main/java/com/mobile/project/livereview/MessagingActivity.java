@@ -43,9 +43,6 @@ public class MessagingActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     //private FirebaseListAdapter<ChatBubble> chatAdapter;
 
-    //SharedPreferences
-    SharedPreferences share;
-    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +57,6 @@ public class MessagingActivity extends AppCompatActivity {
         if (messageTopic == null) {
             messageTopic = "something";
         }
-
-        //Log.v("MessagingAct", messageTopic);
 
         if (getSupportActionBar() != null){
             getSupportActionBar().setTitle("Chat");
@@ -96,30 +91,11 @@ public class MessagingActivity extends AppCompatActivity {
                     return;
                 }
 
-
-                /*
-                long childIter = dataSnapshot.getChildrenCount();
-
-                while (childIter > 0){
-                    String message = dataSnapshot.child("message").getValue(String.class);
-                    Log.e("Mess", "message: "+message);
-                    boolean isMyMessage = false;
-                    if (dataSnapshot.child("user").getValue() == me){
-                        isMyMessage = true;
-                    }
-                    ChatBubble newBubble = new ChatBubble(message, isMyMessage);
-                    ChatBubbles.add(newBubble);
-                    childIter = childIter - 2;
-                }
-                */
-
-
                 ChatBubbles.clear();
                 //For each message, check if user is me. If so, add it to chatbubble list with myMessage = true
                 for(DataSnapshot entry : dataSnapshot.getChildren()) {
                     String message = entry.child("message").getValue(String.class);
-                    //Log.e("Mess", "message: "+message);
-                    //Log.e("messages", "user  "+entry.child("user").getValue());
+
                     if(message != null && !message.isEmpty())
                     {
                         boolean isMyMessage;
@@ -134,10 +110,7 @@ public class MessagingActivity extends AppCompatActivity {
                         ChatBubbles.add(newBubble);
                         adapter.notifyDataSetChanged();
                     }
-
-
                 }
-
             }
 
             @Override
@@ -157,9 +130,6 @@ public class MessagingActivity extends AppCompatActivity {
                     UserProfile.Reputation+=1;
                     //add message to list
                     String message = editText.getText().toString();
-                    //ChatBubble ChatBubble = new ChatBubble(message, true);
-                    //ChatBubbles.add(ChatBubble);
-                    //adapter.notifyDataSetChanged();
                     editText.setText("");
 
 
@@ -169,18 +139,8 @@ public class MessagingActivity extends AppCompatActivity {
 
                     db.child("text_messages").child(messageTopic).child(uid).child("user").setValue(auth.getCurrentUser().getUid());
                     db.child("text_messages").child(messageTopic).child(uid).child("message").setValue(message);
-                    //db.child("text_messages").child(messageTopic).child("user").setValue(auth.getCurrentUser().getUid());
-                    //db.child("text_messages").child(messageTopic).child("message").setValue(message);
-                    db.push();
 
-                    /*
-                    if (myMessage) {
-                        myMessage = false;
-                    } else {
-                        myMessage = true;
-                    }
-                    */
-                    //myMessage = !myMessage;
+                    db.push();
                 }
             }
         });
@@ -191,54 +151,6 @@ public class MessagingActivity extends AppCompatActivity {
     public void onBackPressed()
     {
         super.onBackPressed();
-        /*
-        AlertDialog.Builder build = new AlertDialog.Builder(this, R.style.DialogTheme);
 
-            build.setTitle("Rate your Experience :")
-                    .setMessage(" How was your experience chatting with the user? ")
-                    .setCancelable(false)
-                    .setNegativeButton(" Not so Great ", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-
-                            UserProfile usr = new UserProfile();
-                            usr.addRepu(1);                           //Awarding 1 point to avoid bias towards certain users or benefit of doubt to the person who reponsded.
-
-                            //Using Shared Preferences. Save the reputation points.
-                            int r = usr.setReputation();
-                            share = getSharedPreferences("reputation", Context.MODE_PRIVATE);
-                            editor = share.edit();
-                            editor.putString("repu",Integer.toString(r));
-                            Log.d("MapSharedPref:",String.valueOf(r));
-                            editor.apply();
-
-                            MessagingActivity.this.finish();
-                        }
-                    })
-
-                    .setPositiveButton(" Awesome  ", new DialogInterface.OnClickListener() {
-
-                        @Override
-                    public void onClick(DialogInterface dialogInterface, int i)
-                    {
-                        UserProfile usr = new UserProfile();
-                        usr.addRepu(3);
-
-                        //Using Shared Preferences. Save the reputation points.
-                        int r = usr.setReputation();
-                        share = getSharedPreferences("reputation", Context.MODE_PRIVATE);
-                        editor = share.edit();
-                        editor.putString("repu",Integer.toString(r));
-                        Log.d("MapSharedPref:",String.valueOf(r));
-                        editor.apply();
-
-                        MessagingActivity.this.finish();
-
-                    }
-                });
-            AlertDialog alert = build.create();
-            alert.show();
-        //super.onBackPressed();
-        */
     }
 }

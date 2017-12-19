@@ -60,10 +60,6 @@ public class EditUserProfile extends AppCompatActivity {
         StaticEmail = (TextView) findViewById(R.id.Email_Display);
         StaticEmail.setText(UserProfile.email);
 
-       /*
-        change_Email = (EditText)findViewById(R.id.new_email);
-        email_data = change_Email.getText().toString();
-       */
 
         CurrentPassword = (EditText) findViewById(R.id.Existing_Password);
         data_current =  CurrentPassword.getText().toString();
@@ -86,7 +82,6 @@ public class EditUserProfile extends AppCompatActivity {
                 Since I am checking the inout Password with the stored password, The re-authentication function is called here itself.
                 Hence, no neccessity to sign out and again sign-in. If the user enters a invalid current password, the update failed to take place.
                  */
-
                 if (UserProfile.UserPassword.equals(CurrentPassword.getText().toString()))
                 {
                     user.reauthenticate(credential)
@@ -124,7 +119,6 @@ public class EditUserProfile extends AppCompatActivity {
                 }
             }
         });
-
 
     }
 }

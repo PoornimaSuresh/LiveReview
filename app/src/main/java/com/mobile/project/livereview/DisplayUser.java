@@ -47,9 +47,7 @@ public class DisplayUser extends AppCompatActivity {
 
         Intent calledFromMaps = getIntent();
         EmailIn = calledFromMaps.getStringExtra("emailID");
-        //Log.d(TAG, "displayProfile: "+EmailIn);
 
-        //Name = (TextView) findViewById(R.id.DisplayName);
         Email = (TextView) findViewById(R.id.DisplayEmail);
         Reputation = (TextView) findViewById(R.id.DisplayRepuPoints);
         edit_btn = (Button) findViewById(R.id.EditProfileActivity);
@@ -85,10 +83,7 @@ public class DisplayUser extends AppCompatActivity {
                         UserProfile.Reputation = a;
                         UserProfile.firstTime=false;
                     }
-
-
                 }
-
             }
 
             @Override
@@ -134,25 +129,5 @@ public class DisplayUser extends AppCompatActivity {
         finish();
     }
 
-    private class Profile{
-        private String email;
-        private String reputation;
-
-        public String getEmail() {
-            return email;
-        }
-
-        public String getReputation() {
-            return reputation;
-        }
-
-        public void setEmail(String email) {
-            this.email = email;
-        }
-
-        public void setReputation(String reputation) {
-            this.reputation = reputation;
-        }
-    }
 
 }

@@ -22,7 +22,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.mobile.project.livereview.entity.UserProfile;
-
+/**
+ Created by Johannes
+ */
 public class BroadcastService extends Service implements LocationListener {
     private LocationManager locationManager;
     private Runnable runnable = null;
