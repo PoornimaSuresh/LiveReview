@@ -8,6 +8,18 @@
     <string name="btn_chats">Chats</string>
     <string name="btn_discover">Discover</string>
 
+    <!--Chat-->
+    <string name="hint_message">Type message</string>
+
+    <!--Profile-->
+    <string name="header_edit_profile">Edit Profile</string>
+    <string name="user_profile">User Profile</string>
+    <string name="existing_pass">Existing Password</string>
+    <string name="name_colon">Name:</string>
+    <string name="email_colon">Email:</string>
+    <string name="reputation_colon">Reputation:</string>
+    <string name="btn_edit_profile">Edit Profile</string>
+
     <!--Registration/Login-->
     <string name="action_sign_in_short">Register</string>
     <string name="email">Email</string>

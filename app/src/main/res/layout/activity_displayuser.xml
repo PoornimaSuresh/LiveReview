@@ -15,7 +15,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="User Profile"
+            android:text="@string/user_profile"
             android:textSize="35sp"
             android:textAlignment="center"
             android:id="@+id/StaticUserProfileText"
@@ -27,7 +27,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Name :"
+            android:text="@string/name_colon"
             android:id="@+id/StaticNameText"
             android:textSize="25sp"
             android:visibility="gone"
@@ -50,7 +50,7 @@
             <TextView
                 android:layout_width="80dp"
                 android:layout_height="50dp"
-                android:text="Email:"
+                android:text="@string/email_colon"
                 android:textSize="25sp"
                 android:id="@+id/StaticEmailtext"
                 android:textColor="@color/colorAccent" />
@@ -60,9 +60,10 @@
                 android:layout_width="300dp"
                 android:layout_height="50dp"
                 android:layout_marginLeft="10dp"
-                android:text="Display"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="@color/colorAccent" />
+                android:text=""
+                android:textSize="25sp"
+                android:textColor="@color/colorAccent"
+                />
 
         </LinearLayout>
 
@@ -78,13 +79,13 @@
                 android:layout_height="30dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="30dp"
-                android:text="Reputation :"
+                android:text="@string/reputation_colon"
                 android:textColor="@color/colorAccent"
                 android:textSize="25sp" />
             <TextView
                 android:layout_width="70dp"
                 android:layout_height="30dp"
-                android:text="Points"
+                android:text=""
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="30dp"
                 android:id="@+id/DisplayRepuPoints"
@@ -100,7 +101,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Edit Profile"
+            android:text="@string/btn_edit_profile"
             android:textStyle="bold"
             android:background="@color/colorAccent"
             android:textColor="@android:color/black" />
