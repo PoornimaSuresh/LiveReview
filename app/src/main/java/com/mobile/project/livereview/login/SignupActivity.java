@@ -16,6 +16,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.mobile.project.livereview.MapsActivity;
 import com.mobile.project.livereview.R;
 import com.mobile.project.livereview.entity.UserProfile;
@@ -93,6 +95,15 @@ public class SignupActivity extends AppCompatActivity {
                                     Toast.makeText(SignupActivity.this, "Authentication failed." + task.getException(),
                                             Toast.LENGTH_SHORT).show();
                                 } else {
+                                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                                    DatabaseReference db = database.getReference();
+                                    String uid = auth.getCurrentUser().getUid();
+                                    db.child("users").child(uid);
+
+                                    db.child("users").child(uid).child("email").setValue(email);
+                                    db.child("users").child(uid).child("reputation").setValue(0);
+                                    db.push();
+
                                     startActivity(new Intent(SignupActivity.this, MapsActivity.class));
                                     UserProfile.email = email;
                                     UserProfile.UserPassword = password;

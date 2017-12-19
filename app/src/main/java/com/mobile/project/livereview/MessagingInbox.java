@@ -1,5 +1,7 @@
 package com.mobile.project.livereview;
-
+/*
+   Created by Raghav
+*/
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
@@ -88,7 +90,13 @@ public class MessagingInbox extends AppCompatActivity {
                     String topic =entry.getKey(); //entry.getValue().toString();
                     MarkerLocation markerLocation = new MarkerLocation();
                     markerLocation.setMessage(topic);
-                    markerLocation.setAddress(""); //not using address here
+                    String firstMessage = "";
+                    for(DataSnapshot messages : entry.getChildren())
+                    {
+                        firstMessage = messages.child("message").getValue(String.class);
+                        break;
+                    }
+                    markerLocation.setAddress(firstMessage); //not using address here
                     discoverData.add(markerLocation);
                 }
 

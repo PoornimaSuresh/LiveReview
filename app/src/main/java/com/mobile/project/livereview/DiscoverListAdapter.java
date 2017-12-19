@@ -12,10 +12,9 @@ import com.mobile.project.livereview.entity.MarkerLocation;
 
 import java.util.LinkedList;
 import java.util.List;
-
-/**
- * Created by raagh on 12/7/2017.
- */
+/*
+   Created by Raghav
+*/
 
 public class DiscoverListAdapter extends ArrayAdapter<MarkerLocation> {
 

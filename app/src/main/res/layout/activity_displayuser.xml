@@ -61,9 +61,8 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="10dp"
                 android:text="Display"
-                android:textSize="25sp"
-                android:textColor="@color/colorAccent"
-                />
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/colorAccent" />
 
         </LinearLayout>
 

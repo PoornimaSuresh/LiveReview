@@ -3,6 +3,7 @@ package com.mobile.project.livereview;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,9 +12,18 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.mobile.project.livereview.entity.MarkerLocation;
 import com.mobile.project.livereview.entity.UserProfile;
 /*
 Created by Kshitij Chhatwani.
+Modified by Raghav
  */
 public class DisplayUser extends AppCompatActivity {
 
@@ -23,7 +33,7 @@ public class DisplayUser extends AppCompatActivity {
     TextView Reputation;
     Button edit_btn;
     String EmailIn;
-    UserProfile user;
+    String reputation_points = "0";
     SharedPreferences share;
     SharedPreferences.Editor editor;
 
@@ -43,9 +53,49 @@ public class DisplayUser extends AppCompatActivity {
         Email = (TextView) findViewById(R.id.DisplayEmail);
         Reputation = (TextView) findViewById(R.id.DisplayRepuPoints);
         edit_btn = (Button) findViewById(R.id.EditProfileActivity);
-        user = new UserProfile();
+        fetchData();
         displayProfile();
 
+    }
+
+    private void fetchData() {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        Log.e("Display", auth.getCurrentUser().getUid());
+        DatabaseReference marker_db = database.getReference().child("users").child(auth.getCurrentUser().getUid());
+
+        marker_db.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (!dataSnapshot.hasChildren()) {
+                    Log.i("Display Profile  ", "no data");
+                    return;
+                }
+                int i=0;
+                for (DataSnapshot entry : dataSnapshot.getChildren()) {
+                    if(i==0)
+                    {
+                        i++;
+                        continue;
+                    }
+                    int a = entry.getValue(Integer.class);
+                    Log.e("Display User", "Got reputation points " + a);
+                    if(UserProfile.firstTime)
+                    {
+                        UserProfile.Reputation = a;
+                        UserProfile.firstTime=false;
+                    }
+
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e("db error map", databaseError.getMessage());
+            }
+        });
     }
 
     public void displayProfile()
@@ -54,15 +104,9 @@ public class DisplayUser extends AppCompatActivity {
          Obtain the User data from the database and display it here
         */
 
-        Log.d(TAG, "displayProfile: "+UserProfile.email);
-        Log.d("userPassword :", UserProfile.UserPassword);
-
-        share = getSharedPreferences("reputation", Context.MODE_PRIVATE);
-        String value = share.getString("repu","");
-        Log.d(" FromSharedPrefere : ",value);
-
+        Reputation.setText(UserProfile.Reputation + "");
         Email.setText(UserProfile.email);
-        Reputation.setText(value);
+
 
         edit_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,4 +133,26 @@ public class DisplayUser extends AppCompatActivity {
         super.onBackPressed();
         finish();
     }
+
+    private class Profile{
+        private String email;
+        private String reputation;
+
+        public String getEmail() {
+            return email;
+        }
+
+        public String getReputation() {
+            return reputation;
+        }
+
+        public void setEmail(String email) {
+            this.email = email;
+        }
+
+        public void setReputation(String reputation) {
+            this.reputation = reputation;
+        }
+    }
+
 }

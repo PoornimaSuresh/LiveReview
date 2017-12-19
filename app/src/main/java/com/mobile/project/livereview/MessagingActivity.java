@@ -1,5 +1,7 @@
 package com.mobile.project.livereview;
-
+/*
+   Created by Poornima
+*/
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -151,6 +153,8 @@ public class MessagingActivity extends AppCompatActivity {
                 if (editText.getText().toString().trim().equals("")) {
                     Toast.makeText(MessagingActivity.this, "Please type message. ", Toast.LENGTH_SHORT).show();
                 } else {
+
+                    UserProfile.Reputation+=1;
                     //add message to list
                     String message = editText.getText().toString();
                     //ChatBubble ChatBubble = new ChatBubble(message, true);
@@ -186,6 +190,8 @@ public class MessagingActivity extends AppCompatActivity {
     @Override
     public void onBackPressed()
     {
+        super.onBackPressed();
+        /*
         AlertDialog.Builder build = new AlertDialog.Builder(this, R.style.DialogTheme);
 
             build.setTitle("Rate your Experience :")
@@ -233,5 +239,6 @@ public class MessagingActivity extends AppCompatActivity {
             AlertDialog alert = build.create();
             alert.show();
         //super.onBackPressed();
+        */
     }
 }

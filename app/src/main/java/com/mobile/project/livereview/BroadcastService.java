@@ -8,6 +8,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Debug;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.ActivityCompat;
@@ -93,7 +94,7 @@ public class BroadcastService extends Service implements LocationListener {
         db.child("locations").child(uid).child("lat").setValue(location.getLatitude());
         db.child("locations").child(uid).child("lng").setValue(location.getLongitude());
         db.push();
-
+        Log.e("Broadcast","Received location: " + location.toString());
         UserProfile.currentLocation = location; //update user's current location
     }
 

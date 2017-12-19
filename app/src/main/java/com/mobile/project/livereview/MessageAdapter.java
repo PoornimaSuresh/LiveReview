@@ -15,7 +15,7 @@ import com.mobile.project.livereview.entity.ChatBubble;
 import java.util.List;
 
 /**
- * Created by PS-Student on 11/25/17.
+ * Created by Poornima on 11/25/17.
  */
 
 public class MessageAdapter extends ArrayAdapter<ChatBubble> {

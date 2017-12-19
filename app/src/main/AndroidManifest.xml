@@ -48,7 +48,6 @@
         <activity
             android:name=".DiscoverActivity"
             android:label="Discover" />
-        <activity android:name=".ChatHistoryActivity" />
         <activity android:name=".DisplayUser"
             android:label="Profile" />
         <activity android:name=".EditUserProfile"

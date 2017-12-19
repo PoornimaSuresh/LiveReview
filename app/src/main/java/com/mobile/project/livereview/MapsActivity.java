@@ -1,5 +1,8 @@
 package com.mobile.project.livereview;
 
+/**
+   Created by Johannes
+*/
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -148,18 +151,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         description = input.getText().toString();
 
 
-                        //Adding Rputation Points
-                        UserProfile usr = new UserProfile();
-                        //usr.addRepu(usr.email, 2);
-                        usr.addRepu(2);
-                        int r= usr.setReputation();
 
-                        //Using Shared Preferences. Save the reputation points.
-                        share = getSharedPreferences("reputation", Context.MODE_PRIVATE);
-                        editor = share.edit();
-                        editor.putString("repu",Integer.toString(r));
-                        Log.d("MapSharedPref:",String.valueOf(r));
-                        editor.apply();
+
+
 
                         Marker marker = mMap.addMarker(new MarkerOptions()
                                 .position(latLng)

@@ -1,5 +1,7 @@
 package com.mobile.project.livereview;
-
+/*
+   Created by Raghav
+*/
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
@@ -92,7 +94,7 @@ public class DiscoverActivity extends AppCompatActivity {
                     location.setLatitude(markerLocation.getLat());
                     location.setLongitude(markerLocation.getLng());
 
-                    if(UserProfile.currentLocation != null && location.distanceTo(UserProfile.currentLocation) <= 500)
+                    //if(UserProfile.currentLocation !=null && location.distanceTo(UserProfile.currentLocation) <= 500)
                     {
                         markerLocation.setAddress(getAddress(new LatLng(location.getLatitude(), location.getLongitude())));
                         discoverData.add(markerLocation);
@@ -134,5 +136,7 @@ public class DiscoverActivity extends AppCompatActivity {
         Address address = addresses.get(0);
         return address.getAddressLine(0);
     }
+
+
 
 }
